@@ -29,7 +29,7 @@ Has mobile devices fallback ("touch" or "touch-end" toggling).
 ```
 2. Connect hover-slider.js to your page
 ```html
-<script src="https://cdn.jsdelivr.net/gh/web-projects-lab/hover-slider@0.1.0/hover-slider.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/web-projects-lab/hover-slider@0.1.1/hover-slider.min.js"></script>
 </body>
 ```
 3. Add array with image-variations to img with JSON-array or comma-separated values
