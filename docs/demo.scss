@@ -1,0 +1,66 @@
+html {
+  background-color: #4b4e5a;
+}
+body {
+  padding: 1rem;
+  color: #fff;
+}
+
+.intro {
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+
+  p {
+    line-height: 1.5;
+  }
+
+  a {
+    color: #ff3363;
+  }
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: .5rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-top: 1.5rem;
+  margin-bottom: .5rem;
+}
+
+
+h3 {
+  font-size: 1.35rem;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
+
+
+p {
+  margin-bottom: .5rem;
+}
+
+.examples {
+  display: flex;
+  flex-direction: column;
+
+  .example {
+    margin: 1rem 0;
+
+    p {
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+
+    .example {
+      margin: 0 2rem 0 0;
+    }
+  }
+}
+
+

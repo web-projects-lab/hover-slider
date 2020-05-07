@@ -1,0 +1,59 @@
+html {
+  background-color: #4b4e5a;
+}
+
+body {
+  padding: 1rem;
+  color: #fff;
+}
+
+.intro {
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+}
+.intro p {
+  line-height: 1.5;
+}
+.intro a {
+  color: #ff3363;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin-bottom: 0.5rem;
+}
+
+.examples {
+  display: flex;
+  flex-direction: column;
+}
+.examples .example {
+  margin: 1rem 0;
+}
+.examples .example p {
+  margin-bottom: 1rem;
+}
+@media (min-width: 768px) {
+  .examples {
+    flex-direction: row;
+  }
+  .examples .example {
+    margin: 0 2rem 0 0;
+  }
+}
