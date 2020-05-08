@@ -49,6 +49,14 @@ p {
 .examples .example p {
   margin-bottom: 1rem;
 }
+@media (max-width: 500px) {
+  .examples .example .product-card {
+    width: 100%;
+  }
+  .examples .example .product-card img {
+    border-radius: 3px;
+  }
+}
 @media (min-width: 768px) {
   .examples {
     flex-direction: row;

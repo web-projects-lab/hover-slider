@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Hover slider v1.0.2
+ * Hover slider v1.0.3
  * (c) 2020 A. Rizhenkov
  * Released under the MIT License.
  * https://github.com/web-projects-lab/hover-slider
@@ -14,6 +14,7 @@
             infinite: true,
             autostart: true,
             preloadImages: false,
+            preventScroll: false
         },
 
         i: 0,
@@ -231,15 +232,19 @@
                         hs.togglePaneEnterListener(e, overElement);
                     }
 
-                    e.preventDefault()
+                    if(hs.getOption(imgEl, 'preventScroll')){
+                        e.preventDefault()
+                    }
                 }, false);
             }
             if (hs.getOption(imgEl, 'touch') === 'end') {
                 wrapEl.addEventListener('touchstart', hs.touchStartHandler, false);
                 wrapEl.addEventListener('touchend', hs.touchEndHandler, false);
-                wrapEl.addEventListener('touchmove', e => {
-                    e.preventDefault()
-                }, false);
+                if(hs.getOption(imgEl, 'preventScroll')){
+                    wrapEl.addEventListener('touchmove', e => {
+                        e.preventDefault()
+                    }, false);
+                }
             }
 
             wrapEl.prepend(sliderIndicator);

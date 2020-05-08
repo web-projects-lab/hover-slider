@@ -52,6 +52,15 @@ p {
     p {
       margin-bottom: 1rem;
     }
+
+    @media (max-width: 500px) {
+      .product-card {
+        width: 100%;
+        img {
+          border-radius: 3px;
+        }
+      }
+    }
   }
 
   @media (min-width: 768px) {

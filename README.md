@@ -29,7 +29,7 @@ Has mobile devices fallback ("touch" or "touch-end" toggling).
 ```
 2. Connect hover-slider.js to your page
 ```html
-<script src="https://cdn.jsdelivr.net/gh/web-projects-lab/hover-slider@1.0.2/hover-slider.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/web-projects-lab/hover-slider@1.0.3/hover-slider.min.js"></script>
 </body>
 ```
 3. Add array with image-variations to img with JSON-array or comma-separated values
@@ -55,6 +55,7 @@ Has mobile devices fallback ("touch" or "touch-end" toggling).
 | infinite      | true    | boolean       | Start over when "touch end" happens on last slide   |
 | autostart     | true    | boolean       | Init sliders when library loaded                    |
 | preloadImages | false   | boolean       | Preload slides images with init                     |
+| preventScroll | false   | boolean       | Does need to lock page scrolling when drag image (on touch devices) |
 
 ### Options defining variants
 1. You can define options globally before attaching library:
