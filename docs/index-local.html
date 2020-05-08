@@ -1,82 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html>
+  <head>
     <title>Hover Slider</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="destyle.min.css">
-    <link rel="stylesheet" href="demo.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link rel="stylesheet" href="styles/destyle.min.css">
+<link rel="stylesheet" href="styles/demo.css">
     <link rel="stylesheet" href="../hover-slider-indicator.css">
-</head>
-<body>
-
-<style>
-
-    .product-card {
-        position: relative;
-        width: 200px;
-    }
-    .product-card img {
-        width: 100%;
-    }
-
-</style>
-
-<div class="intro">
-    <h1>HoverSlider</h1>
-
-    <p>
-        Tiny JS-library toggle product images by hovering over product card.
-        Has mobile devices fallback ("touch" or "touch-end" toggling).
-        <br><strong>No dependencies!</strong> <strong>Responsive!</strong> <strong>Free!</strong>
-    </p>
-    <p>
-        See <a href="https://github.com/web-projects-lab/hover-slider/blob/master/README.md">README</a>
-        for quick start guide, options and API details.
-    </p>
-    <p>
-        <a href="https://github.com/web-projects-lab/hover-slider">
-            <img alt="GitHub stars" src="https://img.shields.io/github/stars/web-projects-lab/hover-slider?style=social">
-        </a>
-    </p>
-</div>
-
-<h2>Examples</h2>
-
-<div class="examples">
-    <div class="example">
-
+  </head>
+  <body>
+    <style>.product-card {
+    position: relative;
+    width: 200px;
+}
+.product-card img {
+    width: 100%;
+}
+    </style>
+    <div class="intro">
+      <h1>Hover Slider</h1>
+      <p>Tiny JS-library toggle product images by hovering over product card. Has mobile devices fallback ("touch" or "touch-end" toggling).<br><strong>No dependencies! </strong><strong>Responsive! </strong><strong>Free!</strong></p>
+      <p>See <a href="https://github.com/web-projects-lab/hover-slider/blob/master/README.md">README</a> for quick start guide, options and API details.</p>
+      <p><a href="https://github.com/web-projects-lab/hover-slider"><img alt="GitHub stars" src="https://img.shields.io/github/stars/web-projects-lab/hover-slider?style=social"></a></p>
+    </div>
+    <h2>Examples</h2>
+    <div class="examples">
+      <div class="example">
         <h3>Basic product (or service) variations</h3>
         <p>Fallback swipe-end enabled for touch devices.</p>
-
-        <div class="product-card">
-
-            <img src="images/img1.jpg"
-                 data-hover-slides="images/img2.jpg, images/img3.jpg, images/img4.jpg"
-                 data-options='{"touch": "end" }'
-                 class="product-card-image">
-
-        </div>
-
-    </div>
-
-    <div class="example">
-
+        <div class="product-card"><img class="product-card-image" src="images/img1.jpg" data-hover-slides="images/img2.jpg, images/img3.jpg, images/img4.jpg" data-options="{&quot;touch&quot;: &quot;end&quot; }"></div>
+      </div>
+      <div class="example">
         <h3>Product sides rotation</h3>
-
         <p>Default fallback live-swipe for touch devices.</p>
-
-        <div class="product-card">
-
-            <img src="images/ps1_th.jpg"
-                 data-hover-slides='["images/ps2_th.jpg", "images/ps3_th.jpg",
-         "images/ps4_th.jpg", "images/ps5_th.jpg", "images/ps6_th.jpg"]'
-                 class="product-card-image">
-
-        </div>
+        <div class="product-card"><img class="product-card-image" src="images/ps1_th.jpg" data-hover-slides="[&quot;images/ps2_th.jpg&quot;, &quot;images/ps3_th.jpg&quot;, &quot;images/ps4_th.jpg&quot;, &quot;images/ps5_th.jpg&quot;, &quot;images/ps6_th.jpg&quot;]"></div>
+      </div>
     </div>
-</div>
-
-<script src="../hover-slider.js"></script>
-</body>
+    <script>window['hoverSliderOptions'] = { preloadImages: true };</script>
+    <script src="../hover-slider.js"></script>
+  </body>
 </html>

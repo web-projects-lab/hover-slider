@@ -1,0 +1,7 @@
+.product-card {
+    position: relative;
+    width: 200px;
+}
+.product-card img {
+    width: 100%;
+}

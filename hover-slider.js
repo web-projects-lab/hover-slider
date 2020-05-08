@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Hover slider v0.1.0
+ * Hover slider v1.0.2
  * (c) 2020 A. Rizhenkov
  * Released under the MIT License.
  * https://github.com/web-projects-lab/hover-slider
@@ -12,6 +12,8 @@
         options: {
             touch: "move",
             infinite: true,
+            autostart: true,
+            preloadImages: false,
         },
 
         i: 0,
@@ -33,7 +35,7 @@
                 const baseImgWrapper = this;
                 const imagesToggler = baseImgWrapper.querySelector('.hover-slider-images-toggler');
 
-                const imgEl = baseImgWrapper.querySelector('img[data-hover-slides]');
+                const imgEl = baseImgWrapper.querySelector('img.hover-slider-init');
 
                 const currentSliderIndicator = baseImgWrapper.querySelector('.hover-slider-indicator');
                 const activeDot = currentSliderIndicator.querySelector('.active');
@@ -61,17 +63,38 @@
                     const i = nextDot.dataset.hoverSliderI;
                     const togglePane = imagesToggler.querySelector(`div[data-hover-slider-i="${i}"]`);
 
-                    imgEl.setAttribute('src', togglePane.dataset.hoverSliderImage)
+                    hs.changeImgByTogglePane(togglePane, imgEl)
                 }
+            }
+        },
+
+        changeImgByTogglePane(togglePane, imgEl) {
+            const slideId = togglePane.dataset.hoverSliderI;
+            const slideSrc = togglePane.dataset.hoverSliderImage;
+            const loadedImage = hs.findLoadedImageById(slideId);
+            if (loadedImage !== false) {
+                imgEl.replaceWith(loadedImage)
+            } else {
+                const newImage = hs.createVirtualImage(imgEl, slideSrc);
+                hs.loadedImages.push({
+                    el: newImage,
+                    id: slideId,
+                    src: slideSrc
+                });
+
+                imgEl.replaceWith(newImage)
             }
         },
 
         togglePaneEnterListener(e, inputPane = null) {
             const togglePane = inputPane || this;
 
-            const imgEl = togglePane.parentElement.parentElement.querySelector('img[data-hover-slides]');
-            imgEl.setAttribute('src', togglePane.dataset.hoverSliderImage)
+            const imgEl = togglePane.parentElement.parentElement.querySelector('img.hover-slider-init');
+
+            hs.changeImgByTogglePane(togglePane, imgEl);
+
             const i = togglePane.dataset.hoverSliderI;
+
             const currentSliderIndicator = togglePane.parentElement.parentElement.querySelector('.hover-slider-indicator');
             const activeDot = currentSliderIndicator.querySelector('.active');
             activeDot.classList.remove('active');
@@ -120,88 +143,132 @@
             return element;
         },
 
-        getOption(baseImgEl, option) {
+        getOption(baseImgEl = null, option) {
             let currentSliderOptions = {...hs.options};
 
-            if (baseImgEl.dataset.options) {
+            if (baseImgEl && baseImgEl.dataset.options) {
                 currentSliderOptions = Object.assign(currentSliderOptions, JSON.parse(baseImgEl.dataset.options));
             }
 
             return currentSliderOptions[option];
         },
 
-        prepareMarkup() {
+        loadedImages: [],
+        findLoadedImageById(imageId) {
+            const sliderArr = hs.loadedImages;
+            const slide = sliderArr.find(function (candidate) {
+                if (parseInt(candidate.id) === parseInt(imageId)) {
+                    return true;
+                }
+            });
+            if (typeof slide !== 'undefined') {
+                return slide.el;
+            }
+            return false;
+        },
+
+        createVirtualImage(imgEl, slideSrc) {
+            const imageVirtual = document.createElement('img');
+            imageVirtual.setAttribute('src', slideSrc);
+            imageVirtual.classList = imgEl.classList;
+            imageVirtual.dataset.options = imgEl.dataset.options;
+            imageVirtual.classList.add('hover-slider-init');
+            return imageVirtual;
+        },
+
+        prepareMarkupForImage(imgEl) {
+            const wrapEl = imgEl.parentElement;
+
+            let slides = [];
+            slides.push(imgEl.getAttribute('src'));
+
+            const slidesText = imgEl.dataset.hoverSlides;
+
+            try {
+                slides = slides.concat(JSON.parse(slidesText));
+
+            } catch (e) {
+                slides = slides.concat(slidesText.split(','));
+            }
+
+            slides = slides.map(function (one) {
+                return one.trim()
+            });
+
+            const imagesToggler = hs.createElement('imagesToggler');
+            const sliderIndicator = hs.createElement('sliderIndicator');
+
+            slides.forEach(function (slideSrc, key) {
+                hs.i++;
+
+                imagesToggler.append(hs.createElement('togglePane', {
+                    slideSrc: slideSrc
+                }));
+
+                sliderIndicator.append(hs.createElement('indicatorDot', {
+                    active: (key === 0)
+                }));
+
+                if (hs.getOption(imgEl, 'preloadImages') === true) {
+                    hs.loadedImages.push({
+                        el: hs.createVirtualImage(imgEl, slideSrc),
+                        id: hs.i,
+                        src: slideSrc
+                    });
+                }
+            });
+
+            if (getComputedStyle(wrapEl).position !== 'relative') {
+                wrapEl.style.position = 'relative';
+            }
+
+            if (hs.getOption(imgEl, 'touch') === 'move') {
+                wrapEl.addEventListener('touchmove', e => {
+
+                    const touch = e.touches[0];
+                    const overElement = document.elementFromPoint(touch.clientX, touch.clientY);
+                    if (overElement && overElement.classList.contains('hover-slider-toggle-pane')) {
+                        hs.togglePaneEnterListener(e, overElement);
+                    }
+
+                    e.preventDefault()
+                }, false);
+            }
+            if (hs.getOption(imgEl, 'touch') === 'end') {
+                wrapEl.addEventListener('touchstart', hs.touchStartHandler, false);
+                wrapEl.addEventListener('touchend', hs.touchEndHandler, false);
+                wrapEl.addEventListener('touchmove', e => {
+                    e.preventDefault()
+                }, false);
+            }
+
+            wrapEl.prepend(sliderIndicator);
+            wrapEl.prepend(imagesToggler);
+
+            imgEl.classList.add('hover-slider-init');
+        },
+
+        prepareMarkup(imgEl = null) {
+            if (imgEl) {
+                hs.prepareMarkupForImage(imgEl);
+                return;
+            }
             const wantsSliders = document.querySelectorAll('img[data-hover-slides]:not(.hover-slider-init)');
             wantsSliders.forEach(function (imgEl) {
-
-                const wrapEl = imgEl.parentElement;
-
-                let slides = [];
-                slides.push(imgEl.getAttribute('src'));
-
-                const slidesText = imgEl.dataset.hoverSlides;
-
-                try {
-                    slides = slides.concat(JSON.parse(slidesText));
-
-                } catch (e) {
-                    slides = slides.concat(slidesText.split(','));
-                }
-
-                slides = slides.map(function (one) {
-                    return one.trim()
-                });
-
-                const imagesToggler = hs.createElement('imagesToggler');
-                const sliderIndicator = hs.createElement('sliderIndicator');
-
-                slides.forEach(function (slideSrc, key) {
-                    hs.i++;
-
-                    imagesToggler.append(hs.createElement('togglePane', {
-                        slideSrc: slideSrc
-                    }));
-
-                    sliderIndicator.append(hs.createElement('indicatorDot', {
-                        active: (key === 0)
-                    }));
-                });
-
-                if (getComputedStyle(wrapEl).position !== 'relative') {
-                    wrapEl.style.position = 'relative';
-                }
-
-                if (hs.getOption(imgEl, 'touch') === 'move') {
-                    wrapEl.addEventListener('touchmove', e => {
-
-                        const touch = e.touches[0];
-                        const overElement = document.elementFromPoint(touch.clientX, touch.clientY);
-                        if (overElement && overElement.classList.contains('hover-slider-toggle-pane')) {
-                            hs.togglePaneEnterListener(e, overElement);
-                        }
-
-                        e.preventDefault()
-                    }, false);
-                }
-                if (hs.getOption(imgEl, 'touch') === 'end') {
-                    wrapEl.addEventListener('touchstart', hs.touchStartHandler, false);
-                    wrapEl.addEventListener('touchend', hs.touchEndHandler, false);
-                    wrapEl.addEventListener('touchmove', e => {
-                        e.preventDefault()
-                    }, false);
-                }
-
-                wrapEl.prepend(sliderIndicator);
-                wrapEl.prepend(imagesToggler);
-                imgEl.classList.add('hover-slider-init');
+                hs.prepareMarkupForImage(imgEl)
             })
         },
 
-        init() {
+        init(options = {}) {
             if (window['hoverSliderOptions']) {
                 hs.options = Object.assign(hs.options, window['hoverSliderOptions']);
             }
-            this.prepareMarkup();
+            hs.options = Object.assign(hs.options, options);
+
+            if (hs.getOption(null, 'autostart')) {
+                this.prepareMarkup();
+            }
+
             return this;
         }
     }

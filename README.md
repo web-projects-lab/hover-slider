@@ -1,6 +1,6 @@
 # Hover slider
 
-![GitHub last commit](https://img.shields.io/github/last-commit/web-projects-lab/hover-slider?style=flat-square)
+[![GitHub last commit](https://img.shields.io/github/last-commit/web-projects-lab/hover-slider?style=flat-square)](https://github.com/web-projects-lab/hover-slider/commits/master)
 [![GitHub issues](https://img.shields.io/github/issues/web-projects-lab/hover-slider?style=flat-square)](https://github.com/web-projects-lab/hover-slider/issues)
 [![Demo status](https://img.shields.io/website?label=live%20demo&style=flat-square&url=https%3A%2F%2Fweb-projects-lab.github.io%2Fhover-slider%2F)](https://web-projects-lab.github.io/hover-slider/)
 
@@ -29,7 +29,7 @@ Has mobile devices fallback ("touch" or "touch-end" toggling).
 ```
 2. Connect hover-slider.js to your page
 ```html
-<script src="https://cdn.jsdelivr.net/gh/web-projects-lab/hover-slider@0.1.1/hover-slider.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/web-projects-lab/hover-slider@1.0.2/hover-slider.min.js"></script>
 </body>
 ```
 3. Add array with image-variations to img with JSON-array or comma-separated values
@@ -49,8 +49,16 @@ Has mobile devices fallback ("touch" or "touch-end" toggling).
 
 ## Options
 
-1. You can define options globally before attaching gallery script to web page:  
-```js
+| option        | default | variants      | description                                         |
+|:--------------|:--------|:--------------|:----------------------------------------------------|
+| touch         | "move"  | "move", "end" | Slides toggle while touch moving or after swipe end |
+| infinite      | true    | boolean       | Start over when "touch end" happens on last slide   |
+| autostart     | true    | boolean       | Init sliders when library loaded                    |
+| preloadImages | false   | boolean       | Preload slides images with init                     |
+
+### Options defining variants
+1. You can define options globally before attaching library:
+```javascript
 window['hoverSliderOptions'] = {};
 ```
 
@@ -62,17 +70,20 @@ window['hoverSliderOptions'] = {};
          data-options='{"touch": "end" }'>
 </div>
 ```
-### Options list
 
-| option   | default | variants      | description                                         |
-|:---------|:--------|:--------------|:----------------------------------------------------|
-| touch    | "move"  | "move", "end" | Slides toggle while touch moving or after swipe end |
-| infinite | true    | true, false   | Start over when "touch end" happens on last slide   |
-
+3. If option `autostart` set to `false` you can define options globally with passing options to `init({})` method before calling `prepareMarkup()`.
+```javascript
+hoverSlider.init({});
+hoverSlider.prepareMarkup();
+```
 
 ## API
-1. When new products appeared on page after loading slider just call
-`hoverSlider.prepareMarkup()` to attach slider to new elements
+1. New products on your website appears on page after slider init? (Lazy loading)
+Just call `hoverSlider.prepareMarkup()` to attach slider to new elements.
+
+**Tip**. If option `autostart` set to `false` calling this method will launch all sliders.  
+**Tip 2**. Passing **img** element allows to launch specific slider only.
+
 
 ## Events
 

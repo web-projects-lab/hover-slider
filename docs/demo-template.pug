@@ -1,0 +1,38 @@
+- let programVersion = "1.0.2";
+- let title = "Hover Slider"
+doctype html
+html
+    head
+        title= title
+        meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+        <link rel="stylesheet" href="styles/destyle.min.css">
+        <link rel="stylesheet" href="styles/demo.css">
+        block dotStylesLink
+    body
+        style
+            include styles/basic-minimum.css
+        div.intro
+            h1= title
+            p Tiny JS-library toggle product images by hovering over product card. Has mobile devices fallback ("touch" or "touch-end" toggling).
+                br
+                strong= "No dependencies! "
+                strong= "Responsive! "
+                strong= "Free!"
+            p See <a href="https://github.com/web-projects-lab/hover-slider/blob/master/README.md">README</a> for quick start guide, options and API details.
+            p
+                a(href="https://github.com/web-projects-lab/hover-slider")
+                    img(alt="GitHub stars", src="https://img.shields.io/github/stars/web-projects-lab/hover-slider?style=social")
+        h2 Examples
+        div.examples
+            div.example
+                h3 Basic product (or service) variations
+                p Fallback swipe-end enabled for touch devices.
+                div.product-card
+                    img(src="images/img1.jpg", data-hover-slides="images/img2.jpg, images/img3.jpg, images/img4.jpg", data-options='{"touch": "end" }', class="product-card-image")
+            div.example
+                h3 Product sides rotation
+                p Default fallback live-swipe for touch devices.
+                div.product-card
+                    img(src="images/ps1_th.jpg", data-hover-slides='["images/ps2_th.jpg", "images/ps3_th.jpg", "images/ps4_th.jpg", "images/ps5_th.jpg", "images/ps6_th.jpg"]', class="product-card-image")
+        script= "window['hoverSliderOptions'] = { preloadImages: true };"
+        block libraryScript
