@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Hover slider v1.0.3
+ * Hover slider v1.0.4
  * (c) 2020 A. Rizhenkov
  * Released under the MIT License.
  * https://github.com/web-projects-lab/hover-slider
@@ -14,7 +14,8 @@
             infinite: true,
             autostart: true,
             preloadImages: false,
-            preventScroll: false
+            preventScroll: false,
+            hideOneDot: true,
         },
 
         i: 0,
@@ -198,6 +199,10 @@
 
             const imagesToggler = hs.createElement('imagesToggler');
             const sliderIndicator = hs.createElement('sliderIndicator');
+            
+            if(this.options.hideOneDot && slides.length < 2){
+                sliderIndicator.style.display = 'none';
+            }
 
             slides.forEach(function (slideSrc, key) {
                 hs.i++;

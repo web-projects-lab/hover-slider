@@ -56,6 +56,7 @@ Has mobile devices fallback ("touch" or "touch-end" toggling).
 | autostart     | true    | boolean       | Init sliders when library loaded                    |
 | preloadImages | false   | boolean       | Preload slides images with init                     |
 | preventScroll | false   | boolean       | Does need to lock page scrolling when drag image (on touch devices) |
+| hideOneDot    | true    | boolean       | Does need to hide dots when less than two slides    |
 
 ### Options defining variants
 1. You can define options globally before attaching library:
