@@ -90,3 +90,7 @@ Just call `hoverSlider.prepareMarkup()` to attach slider to new elements.
 ## Events
 
 There is no events to listen at current version. If you need one, please create an issue.
+
+## Vuejs
+
+See [this issue comment](https://github.com/web-projects-lab/hover-slider/issues/1#issuecomment-947714564) to see how it may work with Vue or other UI framework.
